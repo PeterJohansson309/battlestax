@@ -5,10 +5,16 @@ exports.handler = async (event, context) => {
   let gamePayload;
   try {
     // let's set the game id
+    gameId = event.path.split("insertGame/")[1];
     // let's parse the incoming payload
-  } catch (e) {
-    // let's return a 400 if we can't parse the game id or body
-  }
+    gamePayload = JSON.parse(event.body);
+    } catch (e) {
+      // let's return a 400 if we can't parse the game id or body
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ message: "must provide a valid game ID" }),
+      };
+    }
 
   // let's connect to Astra
   const astraClient = await createClient({
