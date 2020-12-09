@@ -16,14 +16,18 @@ exports.handler = async (event, context) => {
       };
     }
 
-  // let's connect to Astra
-  const astraClient = await createClient({
-    // let's set our Astra connection configuration
-  });
+// let's connect to Astra
+const astraClient = await createClient({
+  // let's set our Astra connection configuration
+  astraDatabaseId: process.env.ASTRA_DB_ID,
+  astraDatabaseRegion: process.env.ASTRA_DB_REGION,
+  username: process.env.ASTRA_DB_USERNAME,
+  password: process.env.ASTRA_DB_PASSWORD,
+});
 
-  const gamesCollection = astraClient
-    .namespace(process.env.ASTRA_DB_KEYSPACE)
-    .collection(process.env.GAMES_COLLECTION);
+const gamesCollection = astraClient
+  .namespace(process.env.ASTRA_DB_KEYSPACE)
+  .collection(process.env.GAMES_COLLECTION);
 
   // let's provision a new game
   try {
