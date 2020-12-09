@@ -32,9 +32,18 @@ const gamesCollection = astraClient
   // let's provision a new game
   try {
     // let's create a new game with the gamesCollection
+    const res = await gamesCollection.create(gameId, gamePayload);
     // let's return a 200 with the resoponse from astra
+    return {
+      statusCode: 200,
+      body: JSON.stringify(res),
+    };
   } catch (e) {
     console.error(e);
     // let's return a 500 on error
+    return {
+      statusCode: 500,
+      body: JSON.stringify(e),
+    };
   }
 };
